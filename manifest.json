@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "rimuru.timetracker",
+  "name": "Time Tracker",
+  "version": "0.1.0",
+  "author": "nabdalla",
+  "description": "A free time tracker app for Omarchy: one click on an activity starts its timer. Events log, a pie-chart timeline by day, week, month or year, daily and weekly goals, CSV export. The bar shows what's running; click it to open the app. Fully local: nothing leaves your machine.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "qml/BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Time Tracker",
+    "description": "The running timer; click to open Time Tracker",
+    "category": "Productivity",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "schema": [
+      {
+        "key": "showName",
+        "type": "boolean",
+        "label": "Show the activity name next to the timer",
+        "defaultValue": true
+      }
+    ]
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/nabdalla-prog/Rimuru-timetracker"
+}

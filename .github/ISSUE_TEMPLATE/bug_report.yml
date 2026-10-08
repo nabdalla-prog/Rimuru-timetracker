@@ -1,0 +1,29 @@
+name: Bug report
+description: Something doesn't work or looks wrong
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, and what happened instead? A screenshot helps, but check it doesn't show anything private.
+    validations:
+      required: true
+  - type: textarea
+    id: status
+    attributes:
+      label: Output of `omarchy-timetracker status`
+      render: text
+  - type: input
+    id: omarchy
+    attributes:
+      label: Omarchy version
+      description: Output of `omarchy version`
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Log lines
+      description: "Output of `quickshell log -p ~/.config/omarchy/plugins/rimuru.timetracker | tail -30`, if any."
+      render: text

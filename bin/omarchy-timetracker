@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Time Tracker launcher.
+#
+#   omarchy-timetracker               open the window (starts the app if needed)
+#   omarchy-timetracker toggle NAME   start/stop an activity by name
+#   omarchy-timetracker stop          stop every running timer
+#   omarchy-timetracker status        what's running
+#   omarchy-timetracker export        write a CSV to ~/Downloads
+#   omarchy-timetracker quit          close the app completely
+#   omarchy-timetracker --background  start without showing the window (autostart)
+set -euo pipefail
+
+self="$(readlink -f "$0")"
+dir="$(cd "$(dirname "$self")/.." && pwd)"
+
+call() { quickshell ipc -p "$dir" call timetracker "$@" 2>/dev/null; }
+running() { quickshell ipc -p "$dir" call timetracker status >/dev/null 2>&1; }
+
+# Float the window at phone size (fitted to short screens) and keep it opaque.
+# A runtime rule, so nobody's Hyprland config is edited; it lasts until
+# Hyprland reloads, and each start adds it again.
+float_rule() {
+  command -v hyprctl >/dev/null || return 0
+  local h
+  h=$(hyprctl monitors -j 2>/dev/null | jq -r '[.[] | select(.focused)][0] | (.height / .scale - .reserved[1] - .reserved[3] - 40) | floor' 2>/dev/null || echo 760)
+  [[ "$h" =~ ^[0-9]+$ ]] || h=760
+  (( h > 860 )) && h=860
+  (( h < 520 )) && h=520
+  hyprctl eval "o.window({ class = '^rimuru\\\\.timetracker$' }, { float = true, center = true, size = { 420, $h }, tag = '-default-opacity', opacity = '1 1' })" >/dev/null 2>&1 || true
+}
+
+start() {
+  float_rule
+  TIMETRACKER_HIDDEN="${1:-0}" setsid -f quickshell -p "$dir" >/dev/null 2>&1
+}
+
+case "${1:-}" in
+  "" | show)
+    if running; then call open; else start 0; fi
+    ;;
+  --background)
+    running || start 1
+    ;;
+  toggle)
+    shift
+    running || { start 1; sleep 1.5; }
+    call toggle "$*"
+    ;;
+  stop | status)
+    running && call "$1" || echo "Time Tracker is not running"
+    ;;
+  export)
+    running && call exportCsv || echo "Time Tracker is not running"
+    ;;
+  quit)
+    running && call quit || true
+    ;;
+  *)
+    sed -n '2,11p' "$self" | sed 's/^# \{0,1\}//'
+    exit 1
+    ;;
+esac
