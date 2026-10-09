@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "rimuru.timetracker",
   "name": "Time Tracker",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "nabdalla",
   "description": "A free time tracker app for Omarchy: one click on an activity starts its timer. Events log, a pie-chart timeline by day, week, month or year, daily and weekly goals, CSV export. The bar shows what's running; click it to open the app. Fully local: nothing leaves your machine.",
   "kinds": [

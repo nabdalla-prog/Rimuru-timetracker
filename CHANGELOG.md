@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1 - 2026-10-08
+
+- Notifications no longer include activity names, tracked times or file paths. They were passed to `notify-send` as command-line arguments, which other local users can read.
+
 ## 0.1.0 - 2026-10-07
 
 First release.

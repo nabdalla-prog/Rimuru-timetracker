@@ -132,7 +132,8 @@ Item {
         }
         onExited: function (code) {
             stdinEnabled = true;
-            root.notify(code === 0 ? "Exported" : "Export failed", code === 0 ? "Saved to " + file : "Could not write " + file);
+            // No file path in the text: notify-send arguments are visible to other local users.
+            root.notify(code === 0 ? "Exported" : "Export failed", code === 0 ? "Your CSV file was saved." : "Could not write the CSV file.");
         }
     }
 
@@ -184,8 +185,8 @@ Item {
                 if (root.now - r.start >= hours * Model.HOUR && !root.announced[id]) {
                     next = next || Object.assign({}, root.announced);
                     next[id] = true;
-                    var a = Model.activityById(root.db, r.activity);
-                    root.notify((a ? a.name : "Timer") + " is still running", "It has been going for " + Model.fmt(root.now - r.start) + ". Forgot to stop it?");
+                    // No activity names or durations: notify-send arguments are visible to other local users.
+                    root.notify("A timer is still running", "Forgot to stop it? Open Time Tracker to see which one.");
                 }
             });
         }
@@ -200,7 +201,7 @@ Item {
                 next[id] = true;
                 // Goals already met when the app starts are noted quietly.
                 if (root.primed)
-                    root.notify(s.goal.kind === "atMost" ? s.name + ": over your limit" : s.name + ": goal reached", Model.fmt(s.doneMs) + " of " + Model.fmt(s.targetMs) + (s.goal.period === "week" ? " this week" : " today"));
+                    root.notify(s.goal.kind === "atMost" ? "Over one of your limits" : "Goal reached", "Open Time Tracker to see which one.");
             });
         }
         if (next)
