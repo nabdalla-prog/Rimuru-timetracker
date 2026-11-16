@@ -1,5 +1,7 @@
 # Time Tracker for Omarchy
 
+> **No longer maintained (November 2026).** This repository is archived. The code stays here under its license, but there will be no more fixes, including security fixes, and issues and pull requests are closed. v0.1.2 is the last release; if you still use it, make sure you are on that version.
+
 A free time tracker for [Omarchy](https://omarchy.org). Click an activity to start its timer, click again to stop. See where your time went by day, week, month or year, and set goals.
 
 No account, no subscription, no network. Everything stays on your machine.
