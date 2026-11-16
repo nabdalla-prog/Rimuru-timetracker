@@ -13,7 +13,7 @@
 // Every function returns new objects instead of changing its input, so QML
 // bindings that read the result re-evaluate.
 
-var VERSION = "0.1.0"
+var VERSION = "0.1.2"
 var DATA_VERSION = 1
 
 var MINUTE = 60000

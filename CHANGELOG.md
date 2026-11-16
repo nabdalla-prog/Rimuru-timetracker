@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 - 2026-11-16
+
+- The text field no longer reads the clipboard on its own. An editable Qt text field reads the whole clipboard whenever it changes, so a program that owns the clipboard could stall or exhaust the tracker by streaming endless text. The field is now read-only to Qt and handles typing itself; the clipboard is read only when you press the paste shortcut. The field has no undo or input-method composition as a result.
+- `Model.VERSION` matches the manifest again (0.1.1 left it at 0.1.0, which failed the version test).
+
 ## 0.1.1 - 2026-10-08
 
 - Notifications no longer include activity names, tracked times or file paths. They were passed to `notify-send` as command-line arguments, which other local users can read.
